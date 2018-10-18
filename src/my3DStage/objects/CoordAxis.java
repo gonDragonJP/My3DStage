@@ -5,6 +5,7 @@ import java.nio.FloatBuffer;
 import com.jogamp.opengl.GL2;
 
 import myJOGL_v2_1.My3DVectorF;
+import myJOGL_v2_1.MyGLUtil;
 
 public class CoordAxis {
 
@@ -14,48 +15,82 @@ public class CoordAxis {
 	
 	private static GL2 gl2;
 	
-	public static void draw(GL2 argGL2){
+	public static void draw(GL2 argGL2, float scaleMax, float scaleUnit){
 		
 		gl2 = argGL2;
 		
+		gl2.glPushAttrib(GL2.GL_ALL_ATTRIB_BITS);
+		
 		gl2.glDisable(GL2.GL_LIGHTING);
-		drawAxis();
-		gl2.glEnable(GL2.GL_LIGHTING);
+		gl2.glColor4f(1f, 1f, 1f, 1f);
+		
+		drawAxis(scaleMax);
+		drawXZPlane(scaleMax, scaleUnit);
+		
+		gl2.glPopAttrib();
 	}
 	
-	private static void drawAxis(){
+	private static void drawLine(My3DVectorF start, My3DVectorF end) {
 		
-		My3DVectorF start = new My3DVectorF();
-		My3DVectorF end = new My3DVectorF();
-		
-		for(int x=-1000; x<1000; x++) {
-			
-			start.set(x, 0, -1000);
-			end.set(x, 0, 1000);
-		
-			gl2.glBegin(GL2.GL_LINE_STRIP);
-				gl2.glVertex3fv(start.getFloatBuffer());
-				gl2.glVertex3fv(end.getFloatBuffer());
-			gl2.glEnd();
-		}
-		
-		for(int z=-1000; z<1000; z++) {
-			
-			start.set(-1000, 0, z);
-			end.set(1000, 0, z);
-		
-			gl2.glBegin(GL2.GL_LINE_STRIP);
-				gl2.glVertex3fv(start.getFloatBuffer());
-				gl2.glVertex3fv(end.getFloatBuffer());
-			gl2.glEnd();
-		}
-		
-		start.set(0, -1000, 0);
-		end.set(0, 1000, 0);
-	
 		gl2.glBegin(GL2.GL_LINE_STRIP);
 			gl2.glVertex3fv(start.getFloatBuffer());
 			gl2.glVertex3fv(end.getFloatBuffer());
 		gl2.glEnd();
+	}
+	
+	private static void drawXZPlane(float scaleMax, float scaleUnit){
+		
+		My3DVectorF start = new My3DVectorF();
+		My3DVectorF end = new My3DVectorF();
+		
+		for(float x=0; x<scaleMax; x+=scaleUnit) {
+			
+			start.set(x, 0, -scaleMax);
+			end.set(x, 0, scaleMax);		
+			drawLine(start, end);
+			
+			start.set(-x, 0, -scaleMax);
+			end.set(-x, 0, scaleMax);		
+			drawLine(start, end);
+		}
+		
+		for(float z=0; z<scaleMax; z+=scaleUnit) {
+			
+			start.set(-scaleMax, 0, z);
+			end.set(scaleMax, 0, z);
+			drawLine(start, end);
+			
+			start.set(-scaleMax, 0, -z);
+			end.set(scaleMax, 0, -z);
+			drawLine(start, end);
+		}
+	}
+	
+	private static void drawAxis(float scaleMax) {
+		
+		My3DVectorF start = new My3DVectorF();
+		My3DVectorF end = new My3DVectorF();
+		
+		gl2.glPushAttrib(GL2.GL_ALL_ATTRIB_BITS);
+		
+		start.set(0, 0, 0);
+		
+		gl2.glColor4f(1f, 0, 0, 1f);
+		end.set(scaleMax, 0, 0);
+		drawLine(start, end);
+		
+		gl2.glColor4f(0, 1f, 0, 1f);
+		end.set(0, scaleMax, 0);
+		drawLine(start, end);
+		
+		gl2.glColor4f(0, 0, 1f, 1f);
+		end.set(0, 0, scaleMax);
+		drawLine(start, end);
+		
+		gl2.glPopAttrib();
+		
+		start.set(0, -scaleMax, 0);
+		end.set(0, scaleMax, 0);
+		drawLine(start, end);
 	}
 }

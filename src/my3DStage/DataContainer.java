@@ -2,23 +2,23 @@ package my3DStage;
 
 public class DataContainer {
 	
-	boolean isEnabledTestPlanet = true;
-	
 	int screenX = 640;
 	int screenY = 640;
 	float fovy = 100;		//画面縦方向のカメラの画角
 	
-	float farthestDistance = 1000;
+	boolean isEnableAxisPlaneDraw = true;
+	float scaleMax = 1000;
+	float scaleUnit = 1;
 	
-	int currentStarsNumber = 100;     
-	float distancePercentageNearest  = 20;
-	float distancePercentageFarthest = 70;
-	float distancePercentegeTextureEnabled    = 30 ;
+	float cameraPos_x = 10;
+	float cameraPos_y = 10;
+	float cameraPos_z = 10;
 	
-	int backGroundPointStars = 3000;
+	float lookPoint_x = 0;
+	float lookPoint_y = 0;
+	float lookPoint_z = 0;
 	
-	int currentNebulaeNumber      =10 ;
-	float distanceNebulaNearest = 40;
 	float textureTransparency = 60; //Textureのアルファ値に乗算された透明度となります
-
+	
+	boolean isEnableTestDraw = true;
 }

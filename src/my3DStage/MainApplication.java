@@ -95,7 +95,7 @@ public class MainApplication extends Application{
 	
 	private void updateMyStage() {
 		
-		drawer.updateSpace(dataContainer);
+		drawer.updateMyStage(dataContainer);
 		winWrap.getWindow().setSize(dataContainer.screenX, dataContainer.screenY);
 		invalidate();
 	}

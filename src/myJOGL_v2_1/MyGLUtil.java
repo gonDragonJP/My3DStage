@@ -73,6 +73,15 @@ public class MyGLUtil {
 		setColor(red, green, blue, alpha);
 	}
 	
+	public static void setLineWidth(float widthRatio) {
+		
+		FloatBuffer fb = FloatBuffer.allocate(2);
+		gl.glGetFloatv(gl.GL_LINE_WIDTH_RANGE, fb);
+		
+		float width = (fb.get(1)-fb.get(0))*widthRatio + fb.get(0);
+		gl.glLineWidth(width);
+	}
+	
 	public static void drawLine(MyPointF start, MyPointF end){
 		
 		float[] vertices = {

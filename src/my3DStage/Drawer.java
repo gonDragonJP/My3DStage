@@ -28,7 +28,7 @@ public class Drawer {
 		texSheets = new ArrayList<>();
 	}
 	
-	public void updateSpace(DataContainer dataContainer){
+	public void updateMyStage(DataContainer dataContainer){
 		
 		this.screenX = dataContainer.screenX;
 		this.screenY = dataContainer.screenY;
@@ -41,7 +41,7 @@ public class Drawer {
 	
 	public void init(GL2 gl2, DataContainer dataContainer) {
 		
-		updateSpace(dataContainer);
+		updateMyStage(dataContainer);
 		
 		//loadTexture(gl2);
 		
@@ -98,7 +98,7 @@ public class Drawer {
 		}
 	}
 	
-	public void draw(GL2 gl2, DataContainer dataContainer) {
+	public void draw(GL2 gl2, DataContainer dc) {
 		
 		gl2.glViewport(0, 0, screenX, screenY);
 		
@@ -114,15 +114,19 @@ public class Drawer {
 		setLighting(gl2); 	//ライティングはワールド座標系で行われるので視野変換の設定前に設定します
 							//ライティング設定はモデル変換の影響を受けますが影響を与えはしません
 		
-		My3DVectorF cameraPoint = new My3DVectorF(0,1,10);
-		My3DVectorF lookPoint = new My3DVectorF(0,0,0);
+		My3DVectorF cameraPoint = new My3DVectorF
+				(dc.cameraPos_x, dc.cameraPos_y, dc.cameraPos_z);
+		My3DVectorF lookPoint = new My3DVectorF
+				(dc.lookPoint_x, dc.lookPoint_y, dc.lookPoint_z);
 		
 		setView(gl2, cameraPoint, lookPoint);
 		
 		gl2.glClear(GL2.GL_COLOR_BUFFER_BIT|GL2.GL_DEPTH_BUFFER_BIT);
         gl2.glClearColor(0f, 0f, 0f, 0f);
+        
+        if(dc.isEnableAxisPlaneDraw) CoordAxis.draw(gl2, dc.scaleMax, dc.scaleUnit);
        
-		if(dataContainer.isEnabledTestPlanet) testDraw(gl2);			
+		if(dc.isEnableTestDraw) testDraw(gl2);			
 	}
 	
 	private void testDraw(GL2 gl2) {
@@ -130,13 +134,7 @@ public class Drawer {
 		gl2.glPushAttrib(GL2.GL_ALL_ATTRIB_BITS);
 		
 		gl2.glDisable(GL2.GL_TEXTURE_2D);
-		
 		gl2.glColor4f(1f, 1f, 1f, 0.5f);
-		
-		gl2.glPushMatrix();
-		rotateAndTranslate(gl2,0,0,0,0,0,0);
-		CoordAxis.draw(gl2);
-		gl2.glPopMatrix();
 		
 		gl2.glPushMatrix();
 		rotateAndTranslate(gl2,0,0,0,0,0,0);

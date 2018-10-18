@@ -41,7 +41,7 @@ public class SceneUtil{
 		
 		stage.setTitle("My3DStage ver1.0");
 		stage.setWidth(650);
-		stage.setHeight(500);
+		stage.setHeight(600);
 		
 		VBox root = new VBox();
 		
@@ -62,7 +62,7 @@ public class SceneUtil{
 	}
 	
 	public static TextField textPictureName = new TextField("No_title.png");
-	public static Button makeButton = new Button("Make Space");
+	public static Button makeButton = new Button("Re-Draw");
 	
 	private static Pane genConsoleBox(){
 		
@@ -94,22 +94,24 @@ public class SceneUtil{
 	
 	public enum FieldNameColumn{
 		
-		IsEnabledTestPlanet("isEnabledTestPlanet",""),
 		Screen_X("screenX","pix"),
 		Screen_Y("screenY","pix"),
 		Fovy("fovy","degree"),
-		MaxDistance("farthestDistance","world_scale"),
 		
-		MiddleStarNumber("currentStarsNumber",""),     
-		NearestDistance_MS("distancePercentageNearest","%"),
-		FarthestDistance_MS("distancePercentageFarthest","%"),
-		TexEnabledDistance("distancePercentegeTextureEnabled","%"),
+		IsEnabledAxisPlaneDraw("isEnableAxisPlaneDraw",""),
+		ScaleMax("scaleMax","world_scale"),
+		ScaleUnit("scaleUnit","world_scale"),
 		
-		SmallStarNumber("backGroundPointStars",""),
+		CameraPos_X("cameraPos_x","world_scale"),     
+		CameraPos_Y("cameraPos_y","world_scale"),
+		CameraPos_Z("cameraPos_z","world_scale"),
 		
-		NebulaNumber("currentNebulaeNumber",""),
-		NearestDistance_NB("distanceNebulaNearest","%"),
-		TextureTransparency("textureTransparency","%");
+		LookPoint_X("lookPoint_x","world_scale"),     
+		LookPoint_Y("lookPoint_y","world_scale"),
+		LookPoint_Z("lookPoint_z","world_scale"),
+		
+		TextureTransparency("textureTransparency","%"),
+		IsEnableTestDraw("isEnableTestDraw","");
 		
 		public String fieldName;
 		public String unit;
@@ -128,7 +130,7 @@ public class SceneUtil{
 		Pane pane = new Pane();
 		
 		tableView.setPrefWidth(420);
-		tableView.setPrefHeight(300);
+		tableView.setPrefHeight(400);
 		
 		columns[0] = new TableColumn<>("Variable Name");
 		columns[0].setPrefWidth(200);
