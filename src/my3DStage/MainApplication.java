@@ -40,6 +40,7 @@ public class MainApplication extends Application{
 		
 		drawer = new Drawer();
 		dataContainer = new DataContainer();
+		pictureDialog = new PictureDialog(wnd);
 		
 		setupStage(stage);
 		setupGLWinWrap();
