@@ -12,8 +12,14 @@ public class ArcDischarge {
 	private My3DVectorF posN, velN, posS, velS;
 	private My3DVectorF zeroVec, oldPos, randVel, vecNS;
 
-	private final float randVelFactor = 0.2f;
-
+	private final float randVelFactor = 0.2f; // 放電の方向の不規則さ
+	private final float velReduceRate = 0.6f; // 放電の進行方向における減衰率
+	private final float gravitationRate = 0.1f; // 放電の対極への引力の強さ
+	private final float primaryYVel = 3.0f; // 放電の垂直方向への初速
+	
+	private final int plasmaNumber = 5;
+	private final float plasmaRadius = 6;
+	
 	public void draw(GL2 argGL2) {
 
 		gl2 = argGL2;
@@ -26,10 +32,10 @@ public class ArcDischarge {
 		double radian = 3.1415926/180;
 		double angle =0, radius;
 		
-		for(int i=0; i<5; i++) {
+		for(int i=0; i<plasmaNumber; i++) {
 			
 			angle += Math.random() * 100;
-			radius = Math.random() * 3 + 3;
+			radius = Math.random() * plasmaRadius;
 			
 			float x = (float)(Math.cos(radian * angle) * radius);
 			float z = (float)(Math.sin(radian * angle) * radius);
@@ -44,10 +50,10 @@ public class ArcDischarge {
 	private void initialize(float x, float z) {
 
 		posN = new My3DVectorF(x, 0, z);
-		velN = new My3DVectorF(0, 3, 0);
+		velN = new My3DVectorF(0, primaryYVel, 0);
 
 		posS = new My3DVectorF(-x, 0, -z);
-		velS = new My3DVectorF(0, 3, 0);
+		velS = new My3DVectorF(0, primaryYVel, 0);
 
 		zeroVec = new My3DVectorF(0,0,0);
 		randVel = new My3DVectorF();
@@ -72,9 +78,9 @@ public class ArcDischarge {
 			velLength = My3DVectorF.distance(velN, zeroVec);
 			randVel.set(velLength * getRandVelCoe(), velLength * getRandVelCoe(), velLength * getRandVelCoe());
 			
-			velN.mult(0.6f);
+			velN.mult(velReduceRate);
 			velN.plus(randVel);
-			vecNS.mult(0.1f);
+			vecNS.mult(gravitationRate);
 			velN.plus(vecNS);
 				
 			oldPos.set(posN);
@@ -91,9 +97,9 @@ public class ArcDischarge {
 			velLength = My3DVectorF.distance(velS, zeroVec);
 			randVel.set(velLength * getRandVelCoe(), velLength * getRandVelCoe(), velLength * getRandVelCoe());
 			
-			velS.mult(0.6f);
+			velS.mult(velReduceRate);
 			velS.plus(randVel);
-			vecNS.mult(0.1f);
+			vecNS.mult(gravitationRate);
 			velS.plus(vecNS);
 				
 			oldPos.set(posS);
