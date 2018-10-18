@@ -75,6 +75,7 @@ public class My3DVectorF{
 	
 		return (float)Math.sqrt(a.x * a.x + a.y * a.y + a.z * a.z);
 	}
+	
 	public static My3DVectorF crossProduct(My3DVectorF a, My3DVectorF b){
 	
 		return new My3DVectorF(	a.y * b.z - a.z * b.y,

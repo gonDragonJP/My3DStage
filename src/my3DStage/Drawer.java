@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.glu.GLU;
 
+import my3DStage.objects.ArcDischarge;
 import my3DStage.objects.CoordAxis;
 import myJOGL_v2_1.My3DVectorF;
 import myJOGL_v2_1.MyGLTexSheet;
@@ -125,8 +126,17 @@ public class Drawer {
         gl2.glClearColor(0f, 0f, 0f, 0f);
         
         if(dc.isEnableAxisPlaneDraw) CoordAxis.draw(gl2, dc.scaleMax, dc.scaleUnit);
+        
+        drawObjects(gl2);
        
 		if(dc.isEnableTestDraw) testDraw(gl2);			
+	}
+	
+	private ArcDischarge arcDischarge = new ArcDischarge();
+	
+	private void drawObjects(GL2 gl2) {// put drow objects routine in this
+		
+		arcDischarge.draw(gl2);
 	}
 	
 	private void testDraw(GL2 gl2) {

@@ -30,14 +30,6 @@ public class CoordAxis {
 		gl2.glPopAttrib();
 	}
 	
-	private static void drawLine(My3DVectorF start, My3DVectorF end) {
-		
-		gl2.glBegin(GL2.GL_LINE_STRIP);
-			gl2.glVertex3fv(start.getFloatBuffer());
-			gl2.glVertex3fv(end.getFloatBuffer());
-		gl2.glEnd();
-	}
-	
 	private static void drawXZPlane(float scaleMax, float scaleUnit){
 		
 		My3DVectorF start = new My3DVectorF();
@@ -47,22 +39,22 @@ public class CoordAxis {
 			
 			start.set(x, 0, -scaleMax);
 			end.set(x, 0, scaleMax);		
-			drawLine(start, end);
+			MyGLUtil.drawLine(start, end);
 			
 			start.set(-x, 0, -scaleMax);
 			end.set(-x, 0, scaleMax);		
-			drawLine(start, end);
+			MyGLUtil.drawLine(start, end);
 		}
 		
 		for(float z=0; z<scaleMax; z+=scaleUnit) {
 			
 			start.set(-scaleMax, 0, z);
 			end.set(scaleMax, 0, z);
-			drawLine(start, end);
+			MyGLUtil.drawLine(start, end);
 			
 			start.set(-scaleMax, 0, -z);
 			end.set(scaleMax, 0, -z);
-			drawLine(start, end);
+			MyGLUtil.drawLine(start, end);
 		}
 	}
 	
@@ -77,20 +69,20 @@ public class CoordAxis {
 		
 		gl2.glColor4f(1f, 0, 0, 1f);
 		end.set(scaleMax, 0, 0);
-		drawLine(start, end);
+		MyGLUtil.drawLine(start, end);
 		
 		gl2.glColor4f(0, 1f, 0, 1f);
 		end.set(0, scaleMax, 0);
-		drawLine(start, end);
+		MyGLUtil.drawLine(start, end);
 		
 		gl2.glColor4f(0, 0, 1f, 1f);
 		end.set(0, 0, scaleMax);
-		drawLine(start, end);
+		MyGLUtil.drawLine(start, end);
 		
 		gl2.glPopAttrib();
 		
 		start.set(0, -scaleMax, 0);
 		end.set(0, scaleMax, 0);
-		drawLine(start, end);
+		MyGLUtil.drawLine(start, end);
 	}
 }

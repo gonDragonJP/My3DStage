@@ -82,6 +82,14 @@ public class MyGLUtil {
 		gl.glLineWidth(width);
 	}
 	
+	public static void drawLine(My3DVectorF start, My3DVectorF end) {
+		
+		gl.glBegin(GL2.GL_LINE_STRIP);
+			gl.glVertex3fv(start.getFloatBuffer());
+			gl.glVertex3fv(end.getFloatBuffer());
+		gl.glEnd();
+	}
+	
 	public static void drawLine(MyPointF start, MyPointF end){
 		
 		float[] vertices = {
